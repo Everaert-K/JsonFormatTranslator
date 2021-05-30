@@ -124,6 +124,10 @@ class NewFormat(Format):
         self.updated_time = None
         self.counters_total = None
 
+    def getJson(self):
+        jsonStr = json.dumps(self.__dict__)
+        return jsonStr
+
     def setPath(self, path):
         self.path = path
 
@@ -157,7 +161,3 @@ class NewFormat(Format):
     def setCountersTotal(self, counters_total):
         self.counters_total = counters_total
 
-
-j = '''{"address" : "https://www.google.com ","content" : {"seasons" : [{"text": "winter"},{"text": "spring"},{"text": "summer"},{"text": "autumn"}],"description" : "All seasons"},"updated" : "2021-02-26T08:21:20+00:00","author" : {"username" : "Bob","id" : "68712648721648271"},"id" : "543435435","created" : "2021-02-25T16:25:21+00:00","counters" : {"A" : 3,"B" : 0},"type" : "main"}'''
-o = OldFormat(j)
-print(o.counters_B)
