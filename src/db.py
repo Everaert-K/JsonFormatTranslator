@@ -11,6 +11,10 @@ class database:
             password="root"
         )
         self.conn.autocommit = True
+        # self.create_table()
+
+    def __del__(self):
+        self.conn.close()
 
     def create_table(self):
         s1 = 'DROP TABLE IF EXISTS jsonobjects'
@@ -37,9 +41,17 @@ class database:
         )
         self.conn.autocommit = True
 
-# create_table()
-# j = '''{"address" : "https://www.google.com ","content" : {"seasons" : [{"text": "winter"},{"text": "spring"},{"text": "summer"},{"text": "autumn"}],"description" : "All seasons"},"updated" : "2021-02-26T08:21:20+00:00","author" : {"username" : "Bob","id" : "68712648721648271"},"id" : "543435435","created" : "2021-02-25T16:25:21+00:00","counters" : {"A" : 3,"B" : 0},"type" : "main"}'''
-# o = OldFormat(j)
-# n = TranslatorOldToNew.translate(o) 
-# insert(n)     
-# conn.close()
+    def retrieve_all(self):
+        cursor = self.conn.cursor()
+        query = '''select * from jsonobjects'''
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        return rows
+    
+    def retrieve_object_with_id(self,id):
+        cursor = self.conn.cursor()
+        query = '''select info from jsonobjects where id='''+id
+        cursor.execute(query)
+        row = cursor.fetchone()
+        return row
+

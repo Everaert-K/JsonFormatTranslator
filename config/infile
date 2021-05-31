@@ -1,6 +1,0 @@
-DROP TABLE IF EXISTS jsonobjects;
-
-CREATE TABLE jsonobjects (
-  id serial NOT NULL PRIMARY KEY,
-	info json NOT NULL
-);
