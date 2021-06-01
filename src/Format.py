@@ -124,6 +124,10 @@ class NewFormat(Format):
         self.updated_time = None
         self.counters_total = None
 
+    def validateCorrectly(self):
+        # return (self.path!='None' and self.id!=None and self.author_name!=None and self.author_id!=None and self.created_date!=None and self.created_time!=None and self.counters_total!=None)
+        return 'None' not in (self.path,self.id,self.author_name,self.author_id,self.created_date,self.created_time,self.counters_total)
+
     def getJson(self):
         jsonStr = json.dumps(self.__dict__)
         return jsonStr
@@ -160,4 +164,4 @@ class NewFormat(Format):
 
     def setCountersTotal(self, counters_total):
         self.counters_total = counters_total
-
+ 

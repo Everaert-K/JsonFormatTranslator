@@ -1,4 +1,5 @@
 from Format import NewFormat
+from AbsentError import AbsentError
 
 import psycopg2
 
@@ -11,10 +12,14 @@ class database:
             password="root"
         )
         self.conn.autocommit = True
-        # self.create_table()
+        
 
     def __del__(self):
-        self.conn.close()
+        try:
+            # in case no connection to the DB was made
+            self.conn.close()
+        except AttributeError:
+            pass
 
     def create_table(self):
         s1 = 'DROP TABLE IF EXISTS jsonobjects'
@@ -24,6 +29,8 @@ class database:
         cursor.execute(s2)
 
     def insert(self,newFormat):
+        if not newFormat.validateCorrectly():
+            raise AbsentError
         json_string = newFormat.getJson()
         s = '''INSERT INTO jsonobjects (info) VALUES(\''''+json_string+'''\');'''
         cursor = self.conn.cursor()
